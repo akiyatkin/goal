@@ -1,0 +1,6 @@
+{
+	"name":"akiyatkin/goal",
+	"require":{
+		"infrajs/sequences":"~1"
+	}
+}
