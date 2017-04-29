@@ -10,13 +10,12 @@ Goal.reach('magic');
 
 # Установка счётчиков Google.Analytics и Яндекс.Метрика
 В настройках Метрики неважно стоит ли отметка "Отслеживание хеша в адресной строке браузера"
-
 Под добавленными счётчиками нужно добавить вызов, domready опционально.
-```
+
+```js
 <script>
   domready( function () {
-    Goal.ajaxMetrika();
-    Goal.ajaxAnalytics();
+    Goal.ajax();
   });
 </script>
 ```
