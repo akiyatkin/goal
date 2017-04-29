@@ -10,16 +10,24 @@ window.Goal = {
 			ga('send', 'event', goal);
 		}
 	},
-	handler: function () {
+	ajax: function () {
+		this.ajax = function(){};
 		var first = false;
-		Event.handler('Controller.onshow', function () {
+		Event.handler('Crumb.onchange', function () {
 			if (!first) {
 				first = true;
 				return;
 			}
-			console.log('Goal.hit');
-			if (window.ga) ga('send', 'pageview');
-			if (window.Ya) Ya._metrika.counter.hit(location.href);
+			if (Goal.metrika) Goal.metrika.hit(location.href);
+			if (Goal.analytics) Goal.analytics('send', 'pageview');
 	    });
+	},
+	ajaxMetrika: function () {
+		Goal.ajax();
+		Goal.metrika = Ya._metrika.counter;
+	},
+	ajaxAnalytics: function () {
+		Goal.ajax();
+		Goal.analytics = ga;
 	}
 }
