@@ -11,23 +11,15 @@ window.Goal = {
 		}
 	},
 	ajax: function () {
-		this.ajax = function(){};
+		Goal.ajax = function(){};
 		var first = false;
 		Event.handler('Crumb.onchange', function () {
 			if (!first) {
 				first = true;
 				return;
 			}
-			if (Goal.metrika) Goal.metrika.hit(location.href);
-			if (Goal.analytics) Goal.analytics('send', 'pageview');
+			Ya._metrika.counter.hit(location.href);
+			ga('send', 'pageview');
 	    });
-	},
-	ajaxMetrika: function () {
-		Goal.ajax();
-		Goal.metrika = Ya._metrika.counter;
-	},
-	ajaxAnalytics: function () {
-		Goal.ajax();
-		Goal.analytics = ga;
 	}
 }
