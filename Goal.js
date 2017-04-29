@@ -18,8 +18,8 @@ window.Goal = {
 				first = true;
 				return;
 			}
-			Ya._metrika.counter.hit(location.href);
-			ga('send', 'pageview');
+			if (window.Ya) Ya._metrika.counter.hit(location.href);
+			if (window.ga) ga('send', 'pageview');
 	    });
 	}
 }
