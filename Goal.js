@@ -18,8 +18,12 @@ window.Goal = {
 				first = true;
 				return;
 			}
-			if (window.Ya) Ya._metrika.counter.hit(location.href);
-			if (window.ga) ga('send', 'pageview');
+			var page = location.pathname+location.search;
+			if (window.Ya) Ya._metrika.counter.hit(page);
+			if (window.ga) {
+				ga('set', 'page', page);
+				ga('send', 'pageview');
+			}
 	    });
 	}
 }
