@@ -15,7 +15,7 @@ window.Goal = {
 		
 		Event.handler('Crumb.onchange', function () {
 			if (!Once.omit('-goal')) return; //omit в первый раз возвращает false остальные true
-			var page = location.pathname+location.search;
+			var page = location.pathname+location.search+location.hash;
 			if (window.Ya) Ya._metrika.counter.hit(page);
 			if (window.ga) {
 				ga('set', 'page', page);
