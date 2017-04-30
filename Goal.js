@@ -12,12 +12,9 @@ window.Goal = {
 	},
 	ajax: function () {
 		Goal.ajax = function(){};
-		var first = false;
+		
 		Event.handler('Crumb.onchange', function () {
-			if (!first) {
-				first = true;
-				return;
-			}
+			if (!Once.omit('-goal')) return; //omit в первый раз возвращает false остальные true
 			var page = location.pathname+location.search;
 			if (window.Ya) Ya._metrika.counter.hit(page);
 			if (window.ga) {
