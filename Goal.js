@@ -11,10 +11,9 @@ window.Goal = {
 		}
 	},
 	ajax: function () {
-		Goal.ajax = function(){};
-		
+		if (Once.omit('-goal/ajax')) return; //omit в первый раз возвращает false остальные true
 		Event.handler('Crumb.onchange', function () {
-			if (!Once.omit('-goal')) return; //omit в первый раз возвращает false остальные true
+			if (!Once.omit('-goal/crumb')) return; //omit в первый раз возвращает false остальные true
 			var page = location.pathname+location.search+location.hash;
 			if (window.Ya) Ya._metrika.counter.hit(page);
 			if (window.ga) {
