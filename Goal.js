@@ -6,7 +6,9 @@ window.Goal = {
 			var ya = Ya._metrika.counter;
 			ya.reachGoal(goal);
 		}
-		if (window.ga) {
+		if (window.gtag) {
+			gtag('event', goal,{'event_category': goal});
+		} else if (window.ga) {
 			ga('send', 'event', goal);
 		}
 	},
