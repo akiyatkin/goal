@@ -1,6 +1,7 @@
 {
 	"name":"akiyatkin/goal",
 	"require":{
+		"infrajs/once":"~1",
 		"infrajs/sequence":"~1"
 	}
 }
