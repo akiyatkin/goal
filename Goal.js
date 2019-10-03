@@ -11,6 +11,10 @@ window.Goal = {
 		} else if (window.ga) {
 			ga('send', 'event', goal);
 		}
+
+		if (window.fbq) {
+			fbq('track', 'Lead');
+		}
 	},
 	ajax: function () {
 		if (Once.omit('-goal/ajax')) return; //omit в первый раз возвращает false остальные true
