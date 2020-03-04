@@ -1,4 +1,4 @@
 {
-	"js":["Goal.js","infra.js"],
+	"js":["infra.js"],
 	"dependencies":"event"
 }

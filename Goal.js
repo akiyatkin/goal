@@ -1,4 +1,4 @@
-window.Goal = {
+let Goal = {
 	reach: function (goal) {
 		console.log('Goal.reach '+goal);
 		if (!goal) return;
@@ -36,3 +36,5 @@ window.Goal = {
 	    });
 	}
 }
+
+export default Goal;
