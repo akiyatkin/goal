@@ -1,3 +1,4 @@
+import Wait from "/vendor/akiyatkin/load/Wait.js"
 let Goal = {
 	reach: function (goal) {
 		console.log('Goal.reach '+goal);
@@ -16,8 +17,10 @@ let Goal = {
 			fbq('track', 'Lead');
 		}
 	},
-	ajax: function () {
+	ajax: async () => {
+		let {Once} = await import('/vendor/infrajs/once/Once.js')
 		if (Once.omit('-goal/ajax')) return; //omit в первый раз возвращает false остальные true
+		await Wait();
 		Event.handler('Crumb.onchange', function () {
 			if (!Once.omit('-goal/crumb')) return; //omit в первый раз возвращает false остальные true
 			var page = location.pathname+location.search+location.hash;
@@ -36,5 +39,5 @@ let Goal = {
 	    });
 	}
 }
-
-export default Goal;
+export {Goal}
+export default Goal
