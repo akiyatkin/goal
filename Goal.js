@@ -1,4 +1,6 @@
-import Wait from "/vendor/akiyatkin/load/Wait.js"
+import {Wait} from "/vendor/akiyatkin/load/Wait.js"
+import {Event} from "/vendor/infrajs/event/Event.js"
+import {Once} from '/vendor/infrajs/once/Once.js'
 let Goal = {
 	reach: function (goal) {
 		console.log('Goal.reach '+goal);
@@ -18,7 +20,6 @@ let Goal = {
 		}
 	},
 	ajax: async () => {
-		let {Once} = await import('/vendor/infrajs/once/Once.js')
 		if (Once.omit('-goal/ajax')) return; //omit в первый раз возвращает false остальные true
 		await Wait();
 		Event.handler('Crumb.onchange', function () {
