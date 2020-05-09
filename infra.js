@@ -3,7 +3,7 @@ import { Layer } from '/vendor/infrajs/controller/src/Layer.js'
 import { Goal } from '/vendor/akiyatkin/goal/Goal.js'
 import { Seq } from '/vendor/infrajs/sequence/Seq.js'
 
-Fire.hand(Layer, 'submit', async (layer) => {
+Fire.hand(Layer, 'submited', async (layer) => {
 	if (!layer.goal) return;
 	if (!Seq.getr(layer, ['config','ans','result'])) return;
 	Goal.reach(layer.goal);
