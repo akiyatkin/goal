@@ -21,7 +21,7 @@ let Goal = {
 	},
 	ajax: async () => {
 		if (Once.omit('-goal/ajax')) return; 
-		await DOM();//Счётчик не может добавляться с async или defer
+		await DOM.wait('show') //Счётчик не может добавляться с async или defer
 		Event.handler('Crumb.onchange', async () => {
 			if (!Once.omit('-goal/crumb')) return; //omit в первый раз возвращает false остальные true
 			//Счётчики точно есть потому что это 2ой просмотр после точки входа
