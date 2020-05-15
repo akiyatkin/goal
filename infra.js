@@ -1,14 +1,26 @@
-import { Layer } from '/vendor/infrajs/controller/src/Layer.js'
-import { Event } from '/vendor/infrajs/event/Event.js'
-import { Seq } from '/vendor/infrajs/sequence/Seq.js'
+import { Once } from '/vendor/infrajs/once/Once.js'
+import { Event } from "/vendor/infrajs/event/Event.js"
+import { Crumb } from '/vendor/infrajs/controller/src/Crumb.js'
 
-Event.one('Controller.onshow', async () => {
-	let { Goal } = await import('/vendor/akiyatkin/goal/Goal.js')
-	Goal.ajax()
+Event.handler('Crumb.onchange', async () => {
+	if (!Once.omit('-goal/crumb')) return; //omit в первый раз возвращает false остальные true
+	//Счётчики точно есть потому что это 2ой просмотр после точки входа
+	var page = location.pathname + location.search + location.hash;
+	if (window.Ya) {
+		let num = ym.a[0][0];
+		ym(num, 'hit', page, {
+			referer: Crumb.referrer
+		})
+		//Ya._metrika.counter.hit(page);
+	}
+	if (window.gtag) {
+		var trackid = dataLayer[1][1];
+		gtag('config', trackid, {
+			'page_path': page
+		});
+	} else if (window.ga) {
+		ga('set', 'page', page);
+		ga('send', 'pageview');
+	}
 
-	Layer.hand('submited', async (layer) => {	
-		if (!layer.goal) return;
-		if (!Seq.getr(layer, ['config', 'ans', 'result'])) return;
-		Goal.reach(layer.goal);
-	})
-})
+});

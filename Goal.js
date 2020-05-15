@@ -1,8 +1,11 @@
-import { Event } from "/vendor/infrajs/event/Event.js"
-import { Once } from '/vendor/infrajs/once/Once.js'
-import { Crumb } from '/vendor/infrajs/controller/src/Crumb.js'
-import { DOM } from '/vendor/akiyatkin/load/DOM.js'
+import { Seq } from '/vendor/infrajs/sequence/Seq.js'
+import { Form } from '/vendor/akiyatkin/form/Form.js'
+import { Fire } from '/vendor/akiyatkin/load/Fire.js'
+
 let Goal = {
+	on: (...params) => Fire.on(Goal, ...params),
+    hand: (...params) => Fire.hand(Goal, ...params),
+    wait: (...params) => Fire.wait(Goal, ...params),
 	reach: function (goal) {
 		console.log('Goal.reach ' + goal);
 		if (!goal) return;
@@ -18,33 +21,17 @@ let Goal = {
 		if (window.fbq) {
 			fbq('track', 'Lead');
 		}
-	},
-	ajax: async () => {
-		if (Once.omit('-goal/ajax')) return; 
-		await DOM.wait('show') //Счётчик не может добавляться с async или defer
-		Event.handler('Crumb.onchange', async () => {
-			if (!Once.omit('-goal/crumb')) return; //omit в первый раз возвращает false остальные true
-			//Счётчики точно есть потому что это 2ой просмотр после точки входа
-			var page = location.pathname + location.search + location.hash;
-			if (window.Ya) {
-				let num = ym.a[0][0];
-				ym(num, 'hit', page, {
-					referer: Crumb.referrer
-				})
-				//Ya._metrika.counter.hit(page);
-			}
-			if (window.gtag) {
-				var trackid = dataLayer[1][1];
-				gtag('config', trackid, {
-					'page_path': page
-				});
-			} else if (window.ga) {
-				ga('set', 'page', page);
-				ga('send', 'pageview');
-			}
-
-		});
 	}
 }
+
+Goal.hand('init', async ({form, goal}) => {
+		Form.get('submit', async (f) => {	
+		if (form != f) return
+		if (!Seq.getr(form, ['ans', 'result'])) return;
+		Goal.reach(goal);
+	})
+})
+
+
 export { Goal }
 export default Goal
