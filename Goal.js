@@ -2,10 +2,7 @@ import { Seq } from '/vendor/infrajs/sequence/Seq.js'
 import { Form } from '/vendor/akiyatkin/form/Form.js'
 import { Fire } from '/vendor/akiyatkin/load/Fire.js'
 
-let Goal = {
-	on: (...params) => Fire.on(Goal, ...params),
-    hand: (...params) => Fire.hand(Goal, ...params),
-    wait: (...params) => Fire.wait(Goal, ...params),
+let Goal = { ...Fire,
 	reach: function (goal) {
 		console.log('Goal.reach ' + goal);
 		if (!goal) return;
@@ -24,12 +21,11 @@ let Goal = {
 	}
 }
 
-Goal.hand('init', async ({form, goal}) => {
-		Form.get('submit', async (f) => {	
-		if (form != f) return
-		if (!Seq.getr(form, ['ans', 'result'])) return;
-		Goal.reach(goal);
-	})
+
+Form.done('submit', async (form, ans) => {
+	if (!ans.result) return;
+	if (!form.dataset.goal) return
+	Goal.reach(form.dataset.goal);
 })
 
 
